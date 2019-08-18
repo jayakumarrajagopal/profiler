@@ -2,7 +2,7 @@
 #include <sys/time.h>
 #include <inttypes.h>
 #include <iomanip>
-//#define DEBUG
+#define DEBUG
 #define FUN_COL_SIZE 36
 
 bool code_instance::_stop_metrics = false;
@@ -31,7 +31,7 @@ if ( code_instance::_stop_metrics )
 	return;
 int64_t excl_runt = runtime - child_runt;
 #ifdef DEBUG
-cout << "Run time : " << runtime << "Child time " << child_runt <<"\n"; 
+cout << "Run time : " << runtime << "Child time : " << child_runt <<"  tot_sub_time : " << tot_sub_time <<"\n";
 #endif
 if ( excl_runt < 0 )
 	cerr << " ERROR : some nasty bug.. child runtime was more than parent's!! \n";
@@ -97,7 +97,7 @@ void code_instance::_register()
    call_stack.push(this->_id);
 
    #ifdef DEBUG
-   cout << " Code instance of ("<< _id << " registered \n";
+   cout << " Code instance of ("<< _id << "[" << code_map[_id].name << "] registered \n";
    #endif
 }
 
