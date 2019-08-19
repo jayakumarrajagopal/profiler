@@ -2,7 +2,7 @@
 #include <sys/time.h>
 #include <inttypes.h>
 #include <iomanip>
-#define DEBUG
+//#define DEBUG
 #define FUN_COL_SIZE 36
 
 bool code_instance::_stop_metrics = false;
@@ -14,6 +14,7 @@ int code_chunk::_code_id=0;
 code_map_type code_map;
 void create_final_report( int64_t, map<int,code_chunk> &ref = ::code_map );
 stack <int> call_stack;
+stack <code_instance *> code_instance_stack; // to handle child_runt
 
 class __report_when_dead {
 public:
@@ -29,9 +30,9 @@ void code_chunk::register_time(uint64_t runtime)
 {
 if ( code_instance::_stop_metrics )
 	return;
-int64_t excl_runt = runtime - child_runt;
+int64_t excl_runt = runtime - code_instance_stack.top()->child_runt;
 #ifdef DEBUG
-cout << "Run time : " << runtime << "Child time : " << child_runt <<"  tot_sub_time : " << tot_sub_time <<"\n";
+cout << "Run time : " << runtime << "Child time : " << code_instance_stack.top()->child_runt <<"  tot_sub_time : " << tot_sub_time <<"\n";
 #endif
 if ( excl_runt < 0 )
 	cerr << " ERROR : some nasty bug.. child runtime was more than parent's!! \n";
@@ -39,7 +40,8 @@ if ( min == -1 || min > excl_runt )
 	min = excl_runt;
 if ( max < excl_runt )
 	max = excl_runt;
-child_runt = 0; // this code_chunk finished.. so no children running.. 
+//add this instance's runtime to this code_chunks whole run time. 
+this->child_runt += code_instance_stack.top()->child_runt;
 #ifdef DEBUG
 cout << "register_time() Code chunk time  noted \n tot_time " << tot_time << "run time : "<< runtime << endl;
 #endif
@@ -59,7 +61,11 @@ return _code_id;
 void code_chunk::register_child_time ( uint64_t child_time )
 {
 tot_sub_time += child_time; // sum of all sub routines in all instances of code_chunk..
-child_runt += child_time; // sum of all sub routines time in this instance execution..
+
+}
+void code_instance::register_child_time ( uint64_t child_time )
+{
+this->child_runt += child_time; // sum of all sub routines time in this instance execution..
 }
 
 code_instance::code_instance(const int &id)
@@ -70,6 +76,7 @@ code_instance::code_instance(const int &id)
 	}
 
    this->_id = id;
+   this->child_runt = 0;
    _register();
 }
 
@@ -95,6 +102,8 @@ void code_instance::_register()
    it->second.ctr++;
 
    call_stack.push(this->_id);
+   //code_instance &ref = *this;
+   code_instance_stack.push(this);
 
    #ifdef DEBUG
    cout << " Code instance of ("<< _id << "[" << code_map[_id].name << "] registered \n";
@@ -104,6 +113,9 @@ void code_instance::_register()
 void code_instance::_deregister( uint64_t time_taken)
 {
     call_stack.pop();
+	// this finished.. so remove from stack..	   
+	code_instance_stack.pop(); 
+	
     if ( call_stack.size() > 0 )
     {
 
@@ -120,6 +132,7 @@ void code_instance::_deregister( uint64_t time_taken)
 		#endif
 		if ( ! _stop_metrics )
 			it->second.register_child_time(time_taken);
+			code_instance_stack.top()->register_child_time(time_taken);
 	}
     }
     else {
@@ -154,6 +167,7 @@ cout << " Code instance of ("<< _id << " destructed.. \n";
 #endif
 gettimeofday(&_end,NULL);
 
+
 uint64_t time_taken = diff(_end,_start);
 
 code_map_type::iterator it ;
@@ -163,8 +177,10 @@ if (it == code_map.end() )
 	cerr << " ERROR : unregistered code in destructor : " << this->_id << endl;
 	}
 else {
-	if (! code_instance::_stop_metrics )
+	if (! code_instance::_stop_metrics ) { 
 		it->second.register_time(time_taken);
+
+		}
 
 	_deregister(time_taken);
      }

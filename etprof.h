@@ -18,6 +18,8 @@ class code_instance
 static uint32_t _print_interval;
 static void print_interval(uint32_t );
 public:
+uint64_t child_runt;
+
 static bool _stop_metrics,_wait_for_print;
 bool _participating;
 int _id;
@@ -26,6 +28,7 @@ code_instance(const int & );
 ~code_instance();
 void _register();
 void _deregister(uint64_t);
+void register_child_time(uint64_t);
 static void wait_for_print(bool flag=true);
 static int gen_new_id(const char *,const char*,const char*,int);
 };
