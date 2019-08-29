@@ -9,6 +9,7 @@
  The program calls my profiler , though invasive. 
 
 Advantage: Your program can run the profiler for narrow portion(s) of the code. i.e 
+
      1. for few blocks alone, 
      
      2. few iterations alone 
