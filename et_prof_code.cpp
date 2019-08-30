@@ -1,3 +1,5 @@
+//C++ profiler prog: Jayakumar Rajagopal jaykumar.r@gmail.com
+
 #include "etprofcode.h"
 #include <sys/time.h>
 #include <inttypes.h>
