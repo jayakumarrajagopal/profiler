@@ -21,6 +21,6 @@ Advantage: Your program can run the profiler for narrow portion(s) of the code. 
 
 This has a distinct advantage : You need not run profiler over a library or a trivial code that cannot be tuned anyway.
 
-     Usage : g++ fib.cpp et_profiler.cpp
+     Usage : g++ fib.cpp et_prof_code.cpp
      
      The fib.cpp is sample program, that uses this profiler. 
