@@ -1,5 +1,3 @@
-// this is dummy code to print square root of even numbers less than  n ..
-// where n is parameter.. 
 // purpose is to demonstrate profiler..
 // usage : ./fib <n> <m>
 #include <iostream>
