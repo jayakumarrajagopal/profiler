@@ -3,33 +3,32 @@
 #include <iostream>
 #include <math.h>
 #include "etprof.h"
-void print_sqrt(int);
 long fibonocci(long);
 using namespace std;
 int main(int argc, char *argv[])
-{
-bench_mark_fun ; //*** This activates profiler for main function ****//
-int n = 20; // default
-if ( argc < 2 ) {
-	cerr << " number parameter missing\n taking default";
-}
-else 
-{
-    n = atoi(argv[1]);
-}
+	{
+	bench_mark_fun ; //*** This activates profiler for main function ****//
+	int n = 20; // default
+	if ( argc < 2 ) {
+		cerr << " number parameter missing\n taking default";
+	}
+	else 
+	{
+	    n = atoi(argv[1]);
+	}
 
-if ( n < 0 ) {
-	cerr << " enter small +ve integer\n";
-	return -2;
-}
+	if ( n < 0 ) {
+		cerr << " enter small +ve integer\n";
+		return -2;
+	}
 
-for ( int i=1; i <= n ; i++ )
-{
-	bench_mark_block_id(for_loop); //*** This activates profiler for for() loop ****//
-	cout <<  " fibonocci series for num("  << i << ") = " << fibonocci(i) << "##\n";
-}
+	for ( int i=1; i <= n ; i++ )
+	{
+		bench_mark_block_id(for_loop); //*** This activates profiler for for() loop ****//
+		cout <<  " fibonocci series for num("  << i << ") = " << fibonocci(i) << "##\n";
+	}
 
-return 0;
+	return 0;
 }
 
 long fibonocci(long  n)
