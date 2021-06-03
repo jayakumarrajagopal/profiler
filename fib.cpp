@@ -6,7 +6,7 @@
 long fibonocci(long);
 using namespace std;
 int main(int argc, char *argv[])
-	{
+{
 	bench_mark_fun ; //*** This activates profiler for main function ****//
 	int n = 20; // default
 	if ( argc < 2 ) {
@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 	}
 	else 
 	{
-	    n = atoi(argv[1]);
+		n = atoi(argv[1]);
 	}
 
 	if ( n < 0 ) {
