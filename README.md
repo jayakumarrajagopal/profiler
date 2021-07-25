@@ -9,8 +9,8 @@
  The C++ program being profiled (source code) calls my profiler functions when just needed (calculating time taken in each place this profiler is refered). So we have have to add a function call at the place(block/function). But it is very light, only specific portions and times we want profile will have overhead -- although invasive since we are adding few lines of function calls. 
  
 syntax: 
- 1. bench_mark_fun; -- this lines causes the current function to be profiled.
- 2. bench_mark_block; -- this lines causes the current loop/conditional block to be profiled.
+ 1. bench_mark_fun; // this lines causes the current function to be profiled.
+ 2. bench_mark_block; // this lines causes the current loop/conditional block to be profiled.
 
 Advantage: Your program can run the profiler for narrow portion(s) of the code. i.e 
 
@@ -20,7 +20,7 @@ Advantage: Your program can run the profiler for narrow portion(s) of the code. 
      
      3. a specific values alone (such as one account number alone(among 1000s) that causes delay etc), by embedding the profiler call with if-block.
         eg:  if ( acctId == 89941362 )
-               bench_mark_fun;  -- The profiling will occur only for this account id.
+               bench_mark_fun;  // The profiling will occur only for this account id.
      
      4. start and stop profiler between specific duration, such as if 100 loops / calls made etc while the program will continue its normal run.
      
