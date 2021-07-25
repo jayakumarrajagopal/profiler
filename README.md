@@ -23,7 +23,8 @@ Advantage: Your program can run the profiler for narrow portion(s) of the code. 
                bench_mark_fun;  // The profiling will occur only for this account id.
      
      4. start and stop profiler between specific duration, such as if 100 loops / calls made etc while the program will continue its normal run.
-     
+        eg:  if ( ctr++ < 10 )
+               bench_mark_fun;  // The profiling will occur only for first 10 calls, program will run normally for all other times.     
 
 This has a distinct advantage : You need not run profiler over a library or a trivial code that cannot be tuned anyway.
 
