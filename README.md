@@ -2,11 +2,11 @@
  prog: Jayakumar Rajagopal  jaykumar.r@gmail.com
  
 
- Why this profiler: 
- In profilers, in general the program you profile(benchmark) is executed by the profiler (calculating time taken in each function). It is time consuming, performance downgrading, and spans entire exe's run time  -- although non-invasive to source code.
- 
- My profiler is straight opposite. 
- The program to be profiled (source code) calls my profiler functions when just needed (calculating time taken in each place this profiler is refered), it is very light, only specific portions or times we want profile -- although invasive. 
+ Other profilers: 
+ In profilers, in general the program you profile(benchmark) is executed by the profiler (calculating time taken in each function). It is time consuming, performance downgrading, and spans entire exe's run time. (thought non-invasive)
+
+ *My profiler is straight opposite:* 
+ The C++ program being profiled (source code) calls my profiler functions when just needed (calculating time taken in each place this profiler is refered). So we have have to add a function call at the place(block/function). But it is very light, only specific portions and times we want profile will have overhead -- although invasive since we are adding few lines of function calls. 
 
 Advantage: Your program can run the profiler for narrow portion(s) of the code. i.e 
 
