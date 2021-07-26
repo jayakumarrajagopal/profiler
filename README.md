@@ -25,6 +25,9 @@ Advantage: Your program can run the profiler for narrow portion(s) of the code. 
      4. start and stop profiler between specific duration, such as if 100 loops / calls made etc while the program will continue its normal run.
         eg:  if ( ctr++ < 10 )
                bench_mark_fun;  // The profiling will occur only for first 10 calls, program will run normally for all other times.  
+               
+             if ( i % 10 == 0 )   // once every 10 loops
+                 print_perf_report(); // print current profiler statistics
 
 This has a distinct advantage : You need not run profiler over a library or a trivial code that cannot be tuned anyway. There is a disadvantage too: You must add the profiler call in each place that you need to profile.
 
