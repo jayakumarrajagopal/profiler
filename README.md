@@ -3,10 +3,10 @@
  
 
  Other profilers: 
- In profilers, in general the program you profile(benchmark) is executed by the profiler (calculating time taken in each function). It is time consuming, performance downgrading, and spans entire exe's run time. (thought non-invasive)
+ In profilers, in general the program you profile(benchmark) is executed by the profiler (calculating time taken in each function). It is time consuming, performance downgrading, and spans entire exe's run time. (although non-invasive)
 
  *My profiler is straight opposite:* 
- The C++ program being profiled (source code) calls my profiler functions when just needed (calculating time taken in each place this profiler is refered). So we have have to add a function call at the place(block/function). But it is very light, only specific portions and times we want profile will have overhead -- although invasive since we are adding few lines of function calls. 
+ The C++ program being profiled (source code) calls my profiler to start and stop profiling  when just needed (calculating time taken in each place this profiler is refered). We have have to add a function call at the place(block/function). But it is very light, only specific portions and times we want profile will have overhead -- although invasive since we are adding few lines of function calls. 
  
 syntax: 
  1. bench_mark_fun; // this lines causes the current function to be profiled.
